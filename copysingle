@@ -20,42 +20,35 @@ then
 fi
 
 echo "--- Copying profile to ${server}:${port}"
-if !(rsync -avPLt -e "ssh -oPort=${port}" ${HOME}/.bash_profile ${HOME}/.complrc ${HOME}/.bashrc ${HOME}/.stingrc ${HOME}/.vimrc ${HOME}/.colordiffrc ${HOME}/.spacemacs ${server}:~/)
+if !(rsync -avPLt -e "ssh -oPort=${port}" ~/.bash_profile ~/.bashrc ~/.complrc ~/.zshenv ~/.zshrc ~/.stingrc ~/.vimrc ~/.colordiffrc ~/.spacemacs ${server}:~/)
 then
 	echo "Failed to copy profile files"
 	exit 1
 fi
 
 echo "--- Copying scripts to ${server}:${port}"
-if !(rsync -avPLt -e "ssh -oPort=${port}" ${HOME}/bin/cb ${HOME}/bin/xterm-colors ${HOME}/bin/xterm256-colors ${server}:~/bin/)
+if !(rsync -avPLt -e "ssh -oPort=${port}" ~/bin/cb ~/bin/xterm-colors ~/bin/xterm256-colors ${server}:~/bin/)
 then
 	echo "Failed to copy scripts"
 	exit 1
 fi
 
 echo "--- Copying vim files to ${server}:${port}"
-if !(rsync -avPLt --delete -e "ssh -oPort=${port}" ${HOME}/.vim/ ${server}:~/.vim/)
+if !(rsync -avPLt --delete -e "ssh -oPort=${port}" ~/.vim/ ${server}:~/.vim/)
 then
 	echo "Failed to copy vim files"
 	exit 1
 fi
 
-echo "--- Copying subversion files to ${server}:${port}"
-if !(rsync -avPLt --delete -e "ssh -oPort=${port}" ${HOME}/.subversion/ ${server}:~/.subversion/)
-then
-	echo "Failed to copy subversion files"
-	exit 1
-fi
-
 echo "--- Copying maven settings file to ${server}:${port}"
-if !(rsync -avPLt -e "ssh -oPort=${port}" ${HOME}/.m2/settings.xml ${server}:~/.m2/)
+if !(rsync -avPLt -e "ssh -oPort=${port}" ~/.m2/settings.xml ${server}:~/.m2/)
 then
 	echo "Failed to copy maven settings file"
 	exit 1
 fi
 
 echo "--- Copying good hosts file to ${server}:${port}"
-if !(rsync -avPLt -e "ssh -oPort=${port}" ${HOME}/.ssh/good_hosts ${server}:~/.ssh/)
+if !(rsync -avPLt -e "ssh -oPort=${port}" ~/.ssh/good_hosts ${server}:~/.ssh/)
 then
 	echo "Failed to copy good hosts file"
 	exit 1
