@@ -1,0 +1,62 @@
+#!/bin/bash
+
+if (( $# > 0 ))
+then
+	server=$1
+	shift
+fi
+
+if (( $# > 0 ))
+then
+	port=$1
+else
+	port=22
+fi
+
+if [[ "${server}" = "" ]]
+then
+	echo "Please supply a server"
+	exit 1
+fi
+
+echo "--- Copying profile to ${server}:${port}"
+if !(rsync -avPLt -e "ssh -oPort=${port}" ${HOME}/.bash_profile ${HOME}/.complrc ${HOME}/.bashrc ${HOME}/.stingrc ${HOME}/.vimrc ${HOME}/.colordiffrc ${HOME}/.spacemacs ${server}:~/)
+then
+	echo "Failed to copy profile files"
+	exit 1
+fi
+
+echo "--- Copying scripts to ${server}:${port}"
+if !(rsync -avPLt -e "ssh -oPort=${port}" ${HOME}/bin/cb ${HOME}/bin/xterm-colors ${HOME}/bin/xterm256-colors ${server}:~/bin/)
+then
+	echo "Failed to copy scripts"
+	exit 1
+fi
+
+echo "--- Copying vim files to ${server}:${port}"
+if !(rsync -avPLt --delete -e "ssh -oPort=${port}" ${HOME}/.vim/ ${server}:~/.vim/)
+then
+	echo "Failed to copy vim files"
+	exit 1
+fi
+
+echo "--- Copying subversion files to ${server}:${port}"
+if !(rsync -avPLt --delete -e "ssh -oPort=${port}" ${HOME}/.subversion/ ${server}:~/.subversion/)
+then
+	echo "Failed to copy subversion files"
+	exit 1
+fi
+
+echo "--- Copying maven settings file to ${server}:${port}"
+if !(rsync -avPLt -e "ssh -oPort=${port}" ${HOME}/.m2/settings.xml ${server}:~/.m2/)
+then
+	echo "Failed to copy maven settings file"
+	exit 1
+fi
+
+echo "--- Copying good hosts file to ${server}:${port}"
+if !(rsync -avPLt -e "ssh -oPort=${port}" ${HOME}/.ssh/good_hosts ${server}:~/.ssh/)
+then
+	echo "Failed to copy good hosts file"
+	exit 1
+fi
