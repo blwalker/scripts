@@ -1,4 +1,0 @@
-#!/bin/bash
-
-mkdir -p "${PROJDIR}/$(date "+%Y%m%d")_$1"
-
