@@ -1,0 +1,4 @@
+getVersion gets a version according to the current date and time.
+The version is YY.MM.DD.SSS where SSS is the number of seconds since midnight.
+
+getShortGitHash converts a long git commit hash to a short git commit hash.
