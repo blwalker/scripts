@@ -1,0 +1,34 @@
+{
+  "rules": [
+    {
+      "action": {
+        "type": "expire"
+      },
+      "selection": {
+        "countType": "imageCountMoreThan",
+        "countNumber": 10,
+        "tagStatus": "tagged",
+        "tagPrefixList": [
+          "build-"
+        ]
+      },
+      "description": "Remove old feature branch builds.",
+      "rulePriority": 10
+    },
+    {
+      "action": {
+        "type": "expire"
+      },
+      "selection": {
+        "countType": "imageCountMoreThan",
+        "countNumber": 10,
+        "tagStatus": "tagged",
+        "tagPrefixList": [
+          "master"
+        ]
+      },
+      "description": "Remove old master branch builds.",
+      "rulePriority": 20
+    }
+  ]
+}
